@@ -44,6 +44,7 @@ open class YNSearchView: UIView, YNSearchMainViewDelegate, YNSearchListViewDeleg
         let size = CGSize(width: self.frame.width, height: self.ynSearchMainView.clearHistoryButton.frame.origin.y + self.ynSearchMainView.clearHistoryButton.frame.height + 20)
         self.ynScrollView.contentSize = size
         self.ynSearchMainView.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: size)
+        self.delegate?.ynSearchMainViewSearchHistoryChanged()
     }
     
     required public init?(coder aDecoder: NSCoder) {
