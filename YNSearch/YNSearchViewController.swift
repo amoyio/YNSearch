@@ -22,7 +22,14 @@ open class YNSearchViewController: UIViewController, UITextFieldDelegate {
     open var ynSearchView: YNSearchView!
     
     open var ynSearch = YNSearch()
-
+    open var isCancelButtonAlwaysShown: Bool = false {
+        didSet{
+            guard let searchTextView = self.ynSearchTextfieldView else {
+                return
+            }
+            searchTextView.isCancelButtonAlwaysShown = isCancelButtonAlwaysShown
+        }
+    }
     override open func viewDidLoad() {
         super.viewDidLoad()
         
@@ -57,14 +64,18 @@ open class YNSearchViewController: UIViewController, UITextFieldDelegate {
         self.ynSearchTextfieldView.ynSearchTextField.endEditing(true)
         self.ynSearchView.ynSearchMainView.redrawSearchHistoryButtons()
         
-        UIView.animate(withDuration: 0.3, animations: {
-            self.ynSearchView.ynSearchMainView.alpha = 1
-            self.ynSearchTextfieldView.cancelButton.alpha = 0
-            self.ynSearchView.ynSearchListView.alpha = 0
-        }) { (true) in
-            self.ynSearchView.ynSearchMainView.isHidden = false
-            self.ynSearchView.ynSearchListView.isHidden = true
-            self.ynSearchTextfieldView.cancelButton.isHidden = true
+        if isCancelButtonAlwaysShown {
+            self.ynSearchTextfieldView.cancelButton.isHidden = false
+        }else{
+            UIView.animate(withDuration: 0.3, animations: {
+                self.ynSearchView.ynSearchMainView.alpha = 1
+                self.ynSearchTextfieldView.cancelButton.alpha = 0
+                self.ynSearchView.ynSearchListView.alpha = 0
+            }) { (true) in
+                self.ynSearchView.ynSearchMainView.isHidden = false
+                self.ynSearchView.ynSearchListView.isHidden = true
+                self.ynSearchTextfieldView.cancelButton.isHidden = true
+            }
         }
     }
     @objc open func ynSearchTextfieldTextChanged(_ textField: UITextField) {

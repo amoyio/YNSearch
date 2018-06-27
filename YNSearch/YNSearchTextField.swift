@@ -38,7 +38,7 @@ open class YNSearchTextField: UITextField {
 open class YNSearchTextFieldView: UIView {
     open var ynSearchTextField: YNSearchTextField!
     open var cancelButton: UIButton!
-    
+    public var isCancelButtonAlwaysShown: Bool = false
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -58,7 +58,11 @@ open class YNSearchTextFieldView: UIView {
         self.cancelButton.setTitleColor(UIColor.darkGray, for: .normal)
         self.cancelButton.setTitleColor(UIColor.darkGray.withAlphaComponent(0.3), for: .highlighted)
         self.cancelButton.setTitle("Cancel", for: .normal)
-        self.cancelButton.isHidden = true
+        if isCancelButtonAlwaysShown {
+            self.cancelButton.isHidden = false
+        } else {
+            self.cancelButton.isHidden = true
+        }
         self.addSubview(self.cancelButton)
     }
 
