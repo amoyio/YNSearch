@@ -101,6 +101,7 @@ open class YNSearchMainView: UIView {
         self.searchHistoryLabel.text = "Search History"
         self.searchHistoryLabel.font = UIFont.systemFont(ofSize: 13)
         self.searchHistoryLabel.textColor = UIColor.darkGray
+        
         self.addSubview(self.searchHistoryLabel)
         
     }
@@ -141,6 +142,8 @@ open class YNSearchMainView: UIView {
         self.clearHistoryButton.setTitleColor(UIColor.darkGray, for: .normal)
         self.clearHistoryButton.setTitleColor(UIColor.lightGray, for: .highlighted)
         self.clearHistoryButton.addTarget(self, action: #selector(clearHistoryButtonClicked), for: .touchUpInside)
+        self.clearHistoryButton.isHidden = histories.count == 0
+        self.searchHistoryLabel.isHidden = self.clearHistoryButton.isHidden
         self.addSubview(clearHistoryButton)
         
         self.delegate?.ynSearchMainViewSearchHistoryChanged()
